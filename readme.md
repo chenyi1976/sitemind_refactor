@@ -8,6 +8,7 @@ There are several modules:
 
 - Message Receiver : receive user request, validation, then put request in queue
 - Message Consumer : consumer message in queue, then send to provider adapter
+
 - Provider Adapter : send message to third party email service like mailgun
 
 # How it works
@@ -40,13 +41,17 @@ You need install following dependencies:
 
 Run following command to build it
 
-    $mvn install
-    $java -jar target/sitemind-message-service-1.0-SNAPSHOT.jar
-    $cd ProviderMailgun
-    $mvn package
-    $java -jar target/provider-mailgun-1.0-SNAPSHOT.jar
-    $cd ../ProviderSendGrid
-    $mvn package
-    $java -jar target/provider-mailgun-1.0-SNAPSHOT.jar
-     
+    $cd sitemind_refactor 
+    $mvn package -DskipTests
 
+Start Message Service at http://localhost:8080
+
+    $java -jar message-service/target/message-service-1.0.jar
+    
+Start Mailgun provider adapter at http://localhost:8081 (Will register itself to Message Service on start)
+    
+    $java -jar provider-mailgun/target/provider-mailgun-1.0.jar
+     
+Start Sendgrid provider adapter at http://localhost:8082 (Will register itself to Message Service on start)
+    
+    $java -jar provider-sendgrid/target/provider-sendgrid-1.0.jar
